@@ -15,7 +15,10 @@ function draw(){
         objectDetector.detect(video,gotResult);
         for(i=0;i<objects.length;i++){
             document.getElementById("status").innerHTML="Status: Objects Detected";
-            document.getElementById("number_of_objects").innerHTML="Number of Objects Detected are: "+objects.length;
+            if(objects=input){
+                video.stop();
+                document.getElementById("is_found").innerHTML="object mantioned is found";
+            }
             fill("#FF0000");
             percent=floor(objects[i].confidence*100);
             text(objects[i].label+" "+percent+"%",objects[i].x+15,objects[i].y+15);
@@ -32,9 +35,6 @@ function start(){
 function modelLoaded(){
     console.log("Model Loaded!");
     status=true;
-    video.loop();
-    video.speed(1);
-    video.volume(0);
 }
 function gotResult(error,results){
     if(error){
